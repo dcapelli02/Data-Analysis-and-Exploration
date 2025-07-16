@@ -145,7 +145,7 @@ for (i in seq_len(nrow(opp_coppie))) {
   cat(sprintf(" - %s ↔ %s  (dot product = %.3f)\n", xname, yname, score))
 }
 
-cat("Uncorrelated Variables:\n")
+cat("Positively Correlated Variables:\n")
 for (i in seq_len(nrow(opp_coppie))) {
   xname <- rownames(norm.X)[opp_coppie[i, 1]]
   yname <- rownames(norm.Y)[opp_coppie[i, 2]]
@@ -170,6 +170,27 @@ print(sel.vars.X)
 
 cat("Y variables:\n")
 print(sel.vars.Y)
+
+
+# Most near couples
+soglia <- 0.95
+vic_coppie <- which(dot.products > soglia, arr.ind = TRUE)
+
+cat("Coupled variables:\n")
+for (i in seq_len(nrow(vic_coppie))) {
+  xname <- rownames(norm.X)[vic_coppie[i, 1]]
+  yname <- rownames(norm.Y)[vic_coppie[i, 2]]
+  score <- dot.products[vic_coppie[i, 1], vic_coppie[i, 2]]
+  cat(sprintf(" - %s ↔ %s  (dot product = %.3f)\n", xname, yname, score))
+}
+
+cat("Negatively Correlated Variables:\n")
+for (i in seq_len(nrow(vic_coppie))) {
+  xname <- rownames(norm.X)[vic_coppie[i, 1]]
+  yname <- rownames(norm.Y)[vic_coppie[i, 2]]
+  score <- dot.products[vic_coppie[i, 1], vic_coppie[i, 2]]
+  cat(sprintf(" - %s ↔ %s\n", xname, yname))
+}
 
 
 ### CCA ###
